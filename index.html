@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="一份强调目标、项目与反馈闭环的 AI 高效学习指南。">
+  <title>高效学习 AI | 从会用到会创造</title>
+  <style>
+    :root {
+      --black: #050505;
+      --ink: #161617;
+      --muted: #6e6e73;
+      --line: #d2d2d7;
+      --paper: #ffffff;
+      --soft: #f5f5f7;
+      --blue: #0071e3;
+      --blue-bright: #2997ff;
+      --green: #30d158;
+      --coral: #ff6b57;
+      --yellow: #ffd60a;
+      --radius: 8px;
+      --content: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      letter-spacing: 0;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 8px;
+      left: 8px;
+      z-index: 1000;
+      padding: 10px 14px;
+      color: #fff;
+      background: var(--blue);
+      border-radius: 6px;
+      transform: translateY(-150%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1001;
+      width: 0;
+      height: 3px;
+      background: var(--blue-bright);
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 3px;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      color: #fff;
+      border-bottom: 1px solid transparent;
+      transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+    }
+
+    .site-nav.scrolled,
+    .site-nav.open {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.88);
+      border-color: rgba(0, 0, 0, 0.08);
+      backdrop-filter: saturate(180%) blur(18px);
+      -webkit-backdrop-filter: saturate(180%) blur(18px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(calc(100% - 40px), var(--content));
+      min-height: 54px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      font-size: 17px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      font-size: 13px;
+    }
+
+    .nav-links a {
+      opacity: 0.82;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      opacity: 1;
+    }
+
+    .nav-cta {
+      padding: 8px 15px;
+      color: #fff;
+      background: var(--blue);
+      border-radius: 999px;
+      opacity: 1 !important;
+    }
+
+    .menu-button {
+      display: none;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      color: inherit;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .menu-button span,
+    .menu-button::before,
+    .menu-button::after {
+      display: block;
+      width: 18px;
+      height: 1px;
+      margin: 5px auto;
+      background: currentColor;
+      content: "";
+    }
+
+    .hero {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      min-height: 88vh;
+      overflow: hidden;
+      color: #fff;
+      background: #000;
+    }
+
+    .hero-media,
+    .hero-shade {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: scale(1.02);
+    }
+
+    .hero-shade {
+      background: rgba(0, 0, 0, 0.54);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: min(calc(100% - 40px), var(--content));
+      margin: 0 auto;
+      padding: 150px 0 82px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--blue-bright);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      max-width: 920px;
+      margin: 0;
+      font-size: 76px;
+      line-height: 1.03;
+      font-weight: 750;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 30px 0 0;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 24px;
+      line-height: 1.5;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      font-size: 17px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 160ms ease, background-color 160ms ease, color 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .button-secondary {
+      color: #fff;
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.55);
+    }
+
+    .button-dark {
+      color: #fff;
+      background: var(--ink);
+    }
+
+    .hero-note {
+      margin-top: 40px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 13px;
+    }
+
+    .stat-band {
+      background: var(--soft);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      width: min(calc(100% - 40px), var(--content));
+      margin: 0 auto;
+      padding: 45px 0;
+    }
+
+    .stat {
+      padding: 0 40px;
+      text-align: center;
+      border-right: 1px solid var(--line);
+    }
+
+    .stat:first-child {
+      padding-left: 0;
+    }
+
+    .stat:last-child {
+      padding-right: 0;
+      border-right: 0;
+    }
+
+    .stat strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 36px;
+      line-height: 1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 120px 0;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--content));
+      margin: 0 auto;
+    }
+
+    .section-kicker {
+      margin: 0 0 14px;
+      color: var(--blue);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .section-title {
+      max-width: 900px;
+      margin: 0;
+      font-size: 56px;
+      line-height: 1.08;
+      font-weight: 750;
+      letter-spacing: 0;
+    }
+
+    .section-lead {
+      max-width: 800px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 23px;
+      line-height: 1.55;
+    }
+
+    .truth-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 74px;
+    }
+
+    .truth-quote {
+      margin: 0;
+      font-size: 43px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .truth-quote em {
+      color: var(--coral);
+      font-style: normal;
+    }
+
+    .truth-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .truth-list li {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 16px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .truth-list b {
+      color: var(--blue);
+      font-size: 14px;
+    }
+
+    .truth-list strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 18px;
+    }
+
+    .truth-list span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .path-section {
+      color: #f5f5f7;
+      background: var(--black);
+    }
+
+    .path-section .section-lead {
+      color: #a1a1a6;
+    }
+
+    .path-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin-top: 70px;
+      background: #333336;
+      border: 1px solid #333336;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .path-step {
+      min-height: 360px;
+      padding: 32px 28px;
+      background: #111112;
+    }
+
+    .step-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 88px;
+      color: #000;
+      background: var(--green);
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .path-step:nth-child(2) .step-number {
+      background: var(--blue-bright);
+    }
+
+    .path-step:nth-child(3) .step-number {
+      background: var(--yellow);
+    }
+
+    .path-step:nth-child(4) .step-number {
+      background: var(--coral);
+    }
+
+    .path-step h3 {
+      margin: 0 0 13px;
+      font-size: 25px;
+    }
+
+    .path-step p {
+      margin: 0;
+      color: #a1a1a6;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .route-section {
+      background: #eef8ff;
+    }
+
+    .segmented {
+      display: inline-flex;
+      gap: 4px;
+      margin-top: 48px;
+      padding: 4px;
+      background: rgba(0, 0, 0, 0.07);
+      border-radius: 8px;
+    }
+
+    .segment {
+      min-height: 42px;
+      padding: 0 18px;
+      color: #4a4a4d;
+      background: transparent;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .segment[aria-selected="true"] {
+      color: var(--ink);
+      background: #fff;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12);
+      font-weight: 650;
+    }
+
+    .route-panel {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 70px;
+      align-items: start;
+      margin-top: 54px;
+    }
+
+    .route-summary h3 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.18;
+    }
+
+    .route-summary p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .route-timeline {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid rgba(0, 0, 0, 0.18);
+    }
+
+    .route-timeline li {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 24px;
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+    }
+
+    .route-timeline time {
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .route-timeline strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 18px;
+    }
+
+    .route-timeline span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .image-story {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      min-height: 720px;
+      overflow: hidden;
+      color: #fff;
+      background: #111;
+    }
+
+    .image-story img,
+    .image-story-shade {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .image-story img {
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .image-story-shade {
+      background: rgba(0, 0, 0, 0.55);
+    }
+
+    .image-story-content {
+      position: relative;
+      z-index: 1;
+      width: min(calc(100% - 40px), var(--content));
+      margin: 0 auto;
+      padding: 90px 0;
+    }
+
+    .image-story h2 {
+      max-width: 780px;
+      margin: 0;
+      font-size: 58px;
+      line-height: 1.08;
+    }
+
+    .image-story p {
+      max-width: 650px;
+      margin: 24px 0 0;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 21px;
+      line-height: 1.6;
+    }
+
+    .flywheel-section {
+      background: #fff6ed;
+    }
+
+    .flywheel {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 66px;
+    }
+
+    .flywheel-item {
+      position: relative;
+      min-height: 250px;
+      padding: 28px;
+      background: #fff;
+      border: 1px solid #ead8c8;
+      border-radius: var(--radius);
+    }
+
+    .flywheel-item::after {
+      position: absolute;
+      top: 48px;
+      right: -21px;
+      z-index: 2;
+      color: var(--coral);
+      font-size: 27px;
+      font-weight: 800;
+      content: "→";
+    }
+
+    .flywheel-item:last-child::after {
+      content: "↻";
+    }
+
+    .flywheel-item small {
+      color: var(--coral);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .flywheel-item h3 {
+      margin: 44px 0 12px;
+      font-size: 24px;
+    }
+
+    .flywheel-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .studio-section {
+      color: #f5f5f7;
+      background: #0b0b0c;
+    }
+
+    .studio-section .section-lead {
+      color: #a1a1a6;
+    }
+
+    .studio-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 36px;
+      margin-top: 62px;
+    }
+
+    .studio-fields,
+    .prompt-output {
+      padding: 30px;
+      background: #171719;
+      border: 1px solid #333336;
+      border-radius: var(--radius);
+    }
+
+    .field {
+      margin-bottom: 22px;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      color: #d1d1d6;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      color: #fff;
+      background: #0d0d0e;
+      border: 1px solid #424245;
+      border-radius: 6px;
+      outline: 0;
+    }
+
+    .field input,
+    .field select {
+      min-height: 48px;
+      padding: 0 13px;
+    }
+
+    .field textarea {
+      min-height: 94px;
+      padding: 13px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: var(--blue-bright);
+      box-shadow: 0 0 0 3px rgba(41, 151, 255, 0.18);
+    }
+
+    .prompt-output {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .prompt-output-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #333336;
+    }
+
+    .prompt-output-head h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .copy-button {
+      min-height: 38px;
+      padding: 0 14px;
+      color: #fff;
+      background: var(--blue);
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .prompt-text {
+      flex: 1;
+      margin: 0;
+      padding-top: 24px;
+      color: #d1d1d6;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 15px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    .prompt-rule {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .prompt-rule span {
+      padding: 13px 10px;
+      color: #0b0b0c;
+      background: var(--green);
+      border-radius: 6px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .prompt-rule span:nth-child(2) {
+      background: var(--blue-bright);
+    }
+
+    .prompt-rule span:nth-child(3) {
+      background: var(--yellow);
+    }
+
+    .prompt-rule span:nth-child(4) {
+      background: var(--coral);
+    }
+
+    .plan-section {
+      background: var(--soft);
+    }
+
+    .plan-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 36px;
+    }
+
+    .plan-progress {
+      width: 260px;
+      flex: 0 0 auto;
+    }
+
+    .plan-progress-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .plan-progress-track {
+      height: 8px;
+      overflow: hidden;
+      background: #dcdce0;
+      border-radius: 999px;
+    }
+
+    .plan-progress-fill {
+      width: 0;
+      height: 100%;
+      background: var(--green);
+      border-radius: inherit;
+      transition: width 240ms ease;
+    }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 60px;
+    }
+
+    .week {
+      padding: 26px;
+      background: #fff;
+      border: 1px solid #dedee3;
+      border-radius: var(--radius);
+    }
+
+    .week-label {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .week h3 {
+      margin: 10px 0 5px;
+      font-size: 23px;
+    }
+
+    .week > p {
+      min-height: 48px;
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .check-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid #ececf0;
+    }
+
+    .check-list li {
+      border-bottom: 1px solid #ececf0;
+    }
+
+    .check-list label {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 13px 0;
+      color: #3a3a3c;
+      font-size: 14px;
+      line-height: 1.45;
+      cursor: pointer;
+    }
+
+    .check-list input {
+      width: 18px;
+      height: 18px;
+      margin: 1px 0 0;
+      accent-color: var(--green);
+    }
+
+    .check-list input:checked + span {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .daily-band {
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .daily-layout {
+      display: grid;
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .daily-layout h2 {
+      margin: 0;
+      font-size: 52px;
+      line-height: 1.1;
+    }
+
+    .daily-layout > div > p {
+      margin: 22px 0 0;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 19px;
+      line-height: 1.6;
+    }
+
+    .minute-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.32);
+    }
+
+    .minute-list li {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 22px;
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.32);
+    }
+
+    .minute-list b {
+      color: var(--yellow);
+      font-size: 14px;
+    }
+
+    .minute-list strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 18px;
+    }
+
+    .minute-list span {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .mistake-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 66px;
+    }
+
+    .mistake {
+      padding-top: 22px;
+      border-top: 4px solid var(--coral);
+    }
+
+    .mistake:nth-child(2) {
+      border-color: var(--blue);
+    }
+
+    .mistake:nth-child(3) {
+      border-color: var(--green);
+    }
+
+    .mistake h3 {
+      margin: 0 0 12px;
+      font-size: 23px;
+    }
+
+    .mistake p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .final-section {
+      padding: 130px 0;
+      color: #fff;
+      background: var(--black);
+      text-align: center;
+    }
+
+    .final-section h2 {
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: 62px;
+      line-height: 1.08;
+    }
+
+    .final-section p {
+      max-width: 650px;
+      margin: 25px auto 34px;
+      color: #a1a1a6;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    footer {
+      padding: 28px 0;
+      color: var(--muted);
+      background: var(--soft);
+      font-size: 12px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      width: min(calc(100% - 40px), var(--content));
+      margin: 0 auto;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 650ms ease, transform 650ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--blue-bright);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 980px) {
+      .hero h1 {
+        font-size: 58px;
+      }
+
+      .hero-copy {
+        font-size: 21px;
+      }
+
+      .section-title,
+      .image-story h2 {
+        font-size: 46px;
+      }
+
+      .truth-grid,
+      .route-panel,
+      .studio-grid,
+      .daily-layout {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .path-grid,
+      .week-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .flywheel {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .flywheel-item:nth-child(2)::after {
+        content: "↙";
+      }
+
+      .plan-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .plan-progress {
+        width: min(100%, 420px);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-inner {
+        width: min(calc(100% - 28px), var(--content));
+      }
+
+      .menu-button {
+        display: block;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 54px;
+        left: 0;
+        right: 0;
+        display: none;
+        align-items: stretch;
+        padding: 16px 20px 22px;
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.96);
+        border-bottom: 1px solid var(--line);
+        flex-direction: column;
+        gap: 5px;
+        backdrop-filter: blur(18px);
+      }
+
+      .site-nav.open .nav-links {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 11px 0;
+      }
+
+      .nav-cta {
+        align-self: flex-start;
+        padding: 8px 15px !important;
+      }
+
+      .hero {
+        min-height: 90vh;
+      }
+
+      .hero-content {
+        width: min(calc(100% - 32px), var(--content));
+        padding: 125px 0 54px;
+      }
+
+      .hero h1 {
+        font-size: 44px;
+      }
+
+      .hero-copy {
+        font-size: 18px;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+        width: min(calc(100% - 32px), var(--content));
+        padding: 20px 0;
+      }
+
+      .stat,
+      .stat:first-child,
+      .stat:last-child {
+        padding: 22px 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .stat:last-child {
+        border-bottom: 0;
+      }
+
+      .section {
+        padding: 82px 0;
+      }
+
+      .container,
+      .image-story-content {
+        width: min(calc(100% - 32px), var(--content));
+      }
+
+      .section-title,
+      .image-story h2,
+      .daily-layout h2,
+      .final-section h2 {
+        font-size: 38px;
+      }
+
+      .section-lead,
+      .image-story p {
+        font-size: 18px;
+      }
+
+      .truth-grid {
+        margin-top: 48px;
+      }
+
+      .truth-quote {
+        font-size: 32px;
+      }
+
+      .path-grid,
+      .week-grid,
+      .flywheel,
+      .mistake-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .path-step {
+        min-height: 270px;
+      }
+
+      .step-number {
+        margin-bottom: 58px;
+      }
+
+      .segmented {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
+
+      .route-timeline li {
+        grid-template-columns: 76px 1fr;
+        gap: 14px;
+      }
+
+      .image-story {
+        min-height: 650px;
+      }
+
+      .flywheel-item::after,
+      .flywheel-item:nth-child(2)::after {
+        top: auto;
+        right: 26px;
+        bottom: -25px;
+        content: "↓";
+      }
+
+      .flywheel-item:last-child::after {
+        content: "↻";
+      }
+
+      .studio-fields,
+      .prompt-output,
+      .week {
+        padding: 22px;
+      }
+
+      .prompt-rule {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .minute-list li {
+        grid-template-columns: 68px 1fr;
+        gap: 14px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <nav class="site-nav" aria-label="主导航">
+    <div class="nav-inner">
+      <a class="brand" href="#top">AI 学习指南</a>
+      <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false"><span></span></button>
+      <div class="nav-links">
+        <a href="#method">方法</a>
+        <a href="#route">路线</a>
+        <a href="#prompt">提示词</a>
+        <a href="#plan">30 天计划</a>
+        <a class="nav-cta" href="#start">开始学习</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-media" aria-hidden="true">
+      <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&amp;fit=crop&amp;w=2400&amp;q=88" alt="">
+    </div>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="eyebrow">从好奇，到真正会用</p>
+      <h1>高效学习 AI。<br>快一点，也扎实一点。</h1>
+      <p class="hero-copy">不追逐每一个新名词。先选一个真实问题，用 AI 完成作品，再从结果中补齐知识。速度来自聚焦，质量来自反馈。</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#plan">开启 30 天计划</a>
+        <a class="button button-secondary" href="#method">了解学习方法</a>
+      </div>
+      <p class="hero-note">每天 60 分钟 · 每周一个作品 · 全程可追踪</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="stat-band" aria-label="学习原则">
+      <div class="stats">
+        <div class="stat"><strong>20%</strong><span>输入：课程、文章与概念</span></div>
+        <div class="stat"><strong>60%</strong><span>输出：项目、实验与表达</span></div>
+        <div class="stat"><strong>20%</strong><span>复盘：验证、纠错与沉淀</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="method">
+      <div class="container">
+        <p class="section-kicker reveal">先改变学习方式</p>
+        <h2 class="section-title reveal">学习 AI 的最大误区，是把“知道”当成“会了”。</h2>
+        <p class="section-lead reveal">看完一百篇教程，不如独立完成一个能被别人使用的小作品。真正有效的学习，会留下看得见的结果。</p>
+
+        <div class="truth-grid">
+          <blockquote class="truth-quote reveal">别从“我要学完 AI”开始。<br>从<em>“我要解决什么问题”</em>开始。</blockquote>
+          <ol class="truth-list reveal">
+            <li><b>01</b><div><strong>问题先于工具</strong><span>先写下目标，再选择模型、课程和软件。没有目标的工具收藏，只会增加焦虑。</span></div></li>
+            <li><b>02</b><div><strong>作品先于证书</strong><span>作品会暴露真实短板，也能成为你的案例、简历和下一次合作的起点。</span></div></li>
+            <li><b>03</b><div><strong>验证先于相信</strong><span>让 AI 给出依据、反例和不确定性；关键结论回到原始资料检查。</span></div></li>
+            <li><b>04</b><div><strong>复用先于重复</strong><span>把有效提示词、工作流和判断标准保存下来，让每一次学习都成为下一次的基础。</span></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section path-section">
+      <div class="container">
+        <p class="section-kicker reveal">最短有效路径</p>
+        <h2 class="section-title reveal">四步，把知识变成能力。</h2>
+        <p class="section-lead reveal">每一步都以输出结束。学到的概念要进入作品，作品暴露的问题再决定下一轮输入。</p>
+        <div class="path-grid reveal">
+          <article class="path-step"><div class="step-number">1</div><h3>定义成果</h3><p>把“学习 AI”改写为明确结果：做一份研究报告、一个网页、一套自动化流程或一个小应用。</p></article>
+          <article class="path-step"><div class="step-number">2</div><h3>掌握最小知识</h3><p>只学习完成当前作品必须知道的概念。遇到障碍时补课，而不是提前囤积所有理论。</p></article>
+          <article class="path-step"><div class="step-number">3</div><h3>小步构建</h3><p>先做出能运行的最小版本，再一轮轮提高内容、准确性、交互和稳定性。</p></article>
+          <article class="path-step"><div class="step-number">4</div><h3>反馈复盘</h3><p>让真实用户试用，记录失败案例，把经验整理成清单、模板和可复用的工作流。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section route-section" id="route">
+      <div class="container">
+        <p class="section-kicker reveal">选择你的方向</p>
+        <h2 class="section-title reveal">同样学 AI，路线不必相同。</h2>
+        <p class="section-lead reveal">按你想创造的结果选择路径。先走通一条，再扩展到下一条。</p>
+
+        <div class="segmented reveal" role="tablist" aria-label="AI 学习路线">
+          <button class="segment" type="button" role="tab" aria-selected="true" data-route="creator">内容与效率</button>
+          <button class="segment" type="button" role="tab" aria-selected="false" data-route="builder">应用开发</button>
+          <button class="segment" type="button" role="tab" aria-selected="false" data-route="researcher">模型与原理</button>
+        </div>
+
+        <div class="route-panel reveal" id="route-panel" role="tabpanel">
+          <div class="route-summary">
+            <h3 id="route-title">先成为 AI 的高质量使用者</h3>
+            <p id="route-copy">适合希望提升写作、研究、办公、设计与决策效率的人。重点不是记住术语，而是建立稳定的任务拆解和质量检查能力。</p>
+          </div>
+          <ol class="route-timeline" id="route-timeline"></ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="image-story">
+      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&amp;fit=crop&amp;w=2400&amp;q=88" alt="桌面上的笔记本电脑与学习工作区">
+      <div class="image-story-shade" aria-hidden="true"></div>
+      <div class="image-story-content reveal">
+        <h2>把 AI 变成搭档，而不是答案机器。</h2>
+        <p>优秀的学习者不会只问“答案是什么”，而会让 AI 扮演导师、反方、评审和用户。一次对话，多种视角，才能逼近真正可靠的理解。</p>
+      </div>
+    </section>
+
+    <section class="section flywheel-section">
+      <div class="container">
+        <p class="section-kicker reveal">学习飞轮</p>
+        <h2 class="section-title reveal">问得更好，做得更快，判断得更准。</h2>
+        <p class="section-lead reveal">高效并不等于让 AI 代替思考，而是把时间从机械劳动转向问题定义、判断与创造。</p>
+        <div class="flywheel reveal">
+          <article class="flywheel-item"><small>DEFINE</small><h3>定义问题</h3><p>明确受众、场景、成功标准与限制。问题越具体，结果越可验证。</p></article>
+          <article class="flywheel-item"><small>BUILD</small><h3>快速产出</h3><p>要求 AI 提供第一版、多个方案和关键假设，尽早看到可讨论的成果。</p></article>
+          <article class="flywheel-item"><small>VERIFY</small><h3>主动验证</h3><p>检查事实、来源、逻辑与边界条件，用反例测试结论是否可靠。</p></article>
+          <article class="flywheel-item"><small>REFINE</small><h3>沉淀复用</h3><p>记录有效步骤、失败原因和判断标准，形成下一次可直接调用的模板。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section studio-section" id="prompt">
+      <div class="container">
+        <p class="section-kicker reveal">提示词工作台</p>
+        <h2 class="section-title reveal">好提示词，不靠“魔法词”。</h2>
+        <p class="section-lead reveal">目标、背景、标准、约束。把这四件事讲清楚，输出自然会更稳定。</p>
+
+        <div class="studio-grid reveal">
+          <form class="studio-fields" id="prompt-form">
+            <div class="field">
+              <label for="prompt-goal">目标</label>
+              <input id="prompt-goal" value="帮我制定一份学习 AI 的行动计划">
+            </div>
+            <div class="field">
+              <label for="prompt-context">背景</label>
+              <textarea id="prompt-context">我是零基础学习者，每天可以投入 60 分钟，希望一个月内完成第一个能展示的作品。</textarea>
+            </div>
+            <div class="field">
+              <label for="prompt-output">输出形式</label>
+              <select id="prompt-output">
+                <option>按周拆分的表格</option>
+                <option>分步骤行动清单</option>
+                <option>简洁的项目方案</option>
+                <option>导师式问答</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="prompt-rules">标准与约束</label>
+              <textarea id="prompt-rules">每项任务应在 60 分钟内完成；减少理论堆砌；每周必须产生一个可验证成果；标出常见错误。</textarea>
+            </div>
+          </form>
+
+          <div class="prompt-output" aria-live="polite">
+            <div class="prompt-output-head">
+              <h3>生成的提示词</h3>
+              <button class="copy-button" type="button" id="copy-prompt">复制提示词</button>
+            </div>
+            <pre class="prompt-text" id="prompt-text"></pre>
+            <div class="prompt-rule" aria-label="提示词结构">
+              <span>目标</span><span>背景</span><span>形式</span><span>标准</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section plan-section" id="plan">
+      <div class="container">
+        <div class="plan-head">
+          <div>
+            <p class="section-kicker reveal">30 天行动计划</p>
+            <h2 class="section-title reveal">四周，完成第一个 AI 作品。</h2>
+          </div>
+          <div class="plan-progress reveal" aria-label="计划完成进度">
+            <div class="plan-progress-row"><span>完成进度</span><strong id="progress-label">0 / 16</strong></div>
+            <div class="plan-progress-track"><div class="plan-progress-fill" id="progress-fill"></div></div>
+          </div>
+        </div>
+
+        <div class="week-grid reveal">
+          <article class="week">
+            <span class="week-label">第 1 周</span>
+            <h3>建立手感</h3>
+            <p>熟悉对话、拆解任务与验证结果。</p>
+            <ul class="check-list">
+              <li><label><input type="checkbox" data-task="1"><span>列出 10 个希望 AI 帮助的真实问题</span></label></li>
+              <li><label><input type="checkbox" data-task="2"><span>用四段式结构重写 3 个提示词</span></label></li>
+              <li><label><input type="checkbox" data-task="3"><span>让 AI 对同一问题给出 3 种方案</span></label></li>
+              <li><label><input type="checkbox" data-task="4"><span>核验一次 AI 输出中的事实与来源</span></label></li>
+            </ul>
+          </article>
+
+          <article class="week">
+            <span class="week-label">第 2 周</span>
+            <h3>做出作品</h3>
+            <p>从最小版本开始，不等待准备完美。</p>
+            <ul class="check-list">
+              <li><label><input type="checkbox" data-task="5"><span>选择一个明确受众与使用场景</span></label></li>
+              <li><label><input type="checkbox" data-task="6"><span>定义作品的最低成功标准</span></label></li>
+              <li><label><input type="checkbox" data-task="7"><span>完成可运行的第一版</span></label></li>
+              <li><label><input type="checkbox" data-task="8"><span>邀请一位真实用户体验</span></label></li>
+            </ul>
+          </article>
+
+          <article class="week">
+            <span class="week-label">第 3 周</span>
+            <h3>提高质量</h3>
+            <p>围绕失败案例补知识、改流程。</p>
+            <ul class="check-list">
+              <li><label><input type="checkbox" data-task="9"><span>记录 5 个不满意的输出案例</span></label></li>
+              <li><label><input type="checkbox" data-task="10"><span>为关键结果建立检查清单</span></label></li>
+              <li><label><input type="checkbox" data-task="11"><span>比较两个模型或两种工作流</span></label></li>
+              <li><label><input type="checkbox" data-task="12"><span>完成第二版并再次测试</span></label></li>
+            </ul>
+          </article>
+
+          <article class="week">
+            <span class="week-label">第 4 周</span>
+            <h3>发布复盘</h3>
+            <p>让作品接受真实世界的反馈。</p>
+            <ul class="check-list">
+              <li><label><input type="checkbox" data-task="13"><span>整理作品的目标、过程与结果</span></label></li>
+              <li><label><input type="checkbox" data-task="14"><span>公开发布作品或案例说明</span></label></li>
+              <li><label><input type="checkbox" data-task="15"><span>总结最有效的 5 条经验</span></label></li>
+              <li><label><input type="checkbox" data-task="16"><span>确定下一个 30 天项目</span></label></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section daily-band">
+      <div class="container daily-layout">
+        <div class="reveal">
+          <h2>每天 60 分钟，足够开始。</h2>
+          <p>稳定的小循环，比偶尔熬夜学四小时更有效。让每天都留下一个可见进展。</p>
+        </div>
+        <ol class="minute-list reveal">
+          <li><b>10 分钟</b><div><strong>回顾目标</strong><span>查看昨天的结果和今天唯一要解决的问题。</span></div></li>
+          <li><b>15 分钟</b><div><strong>定向输入</strong><span>只学习解决当前障碍需要的概念或案例。</span></div></li>
+          <li><b>25 分钟</b><div><strong>动手输出</strong><span>写、做、运行、测试，让知识进入作品。</span></div></li>
+          <li><b>10 分钟</b><div><strong>验证复盘</strong><span>记录结果、错误和明天最值得改进的一件事。</span></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="section-kicker reveal">避开三种低效努力</p>
+        <h2 class="section-title reveal">少走弯路，也是一种速度。</h2>
+        <div class="mistake-grid reveal">
+          <article class="mistake"><h3>追逐所有新工具</h3><p>工具更新没有终点。固定一套主力工具至少两周，先把任务做通，再按真实需求更换。</p></article>
+          <article class="mistake"><h3>只复制，不判断</h3><p>对关键内容追问依据、假设和反例。事实要核验，代码要运行，结论要能解释。</p></article>
+          <article class="mistake"><h3>只学习，不发布</h3><p>发布会带来真实限制与反馈。一个粗糙但可用的作品，比永远停留在笔记里的完美计划更有价值。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-section" id="start">
+      <div class="container reveal">
+        <h2>今天，不必学完 AI。<br>先完成第一个小作品。</h2>
+        <p>选一个你真正关心的问题，给自己 60 分钟。定义结果，做出第一版，然后让反馈带你走向下一步。</p>
+        <a class="button button-primary" href="#plan">从第 1 周开始</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>AI 学习指南 · 为行动而设计</span>
+      <span>图片来自 Unsplash · 进度保存在当前浏览器</span>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.querySelector('.site-nav');
+    const menuButton = document.querySelector('.menu-button');
+    const scrollProgress = document.querySelector('.scroll-progress');
+
+    function updateScrollUI() {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
+      scrollProgress.style.width = `${Math.min(100, ratio * 100)}%`;
+    }
+
+    window.addEventListener('scroll', updateScrollUI, { passive: true });
+    updateScrollUI();
+
+    menuButton.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(open));
+      menuButton.setAttribute('aria-label', open ? '关闭导航' : '打开导航');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach((link) => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', '打开导航');
+      });
+    });
+
+    const routes = {
+      creator: {
+        title: '先成为 AI 的高质量使用者',
+        copy: '适合希望提升写作、研究、办公、设计与决策效率的人。重点不是记住术语，而是建立稳定的任务拆解和质量检查能力。',
+        steps: [
+          ['第 1 阶段', '对话与拆解', '练习定义目标、补充背景、指定输出形式和验收标准。'],
+          ['第 2 阶段', '研究与验证', '让 AI 汇总线索、比较观点，再回到可靠来源检查关键事实。'],
+          ['第 3 阶段', '流程与模板', '把重复任务整理成提示词模板、检查清单和固定步骤。'],
+          ['作品目标', '个人 AI 工作台', '完成一套能稳定解决真实工作或学习问题的工作流。']
+        ]
+      },
+      builder: {
+        title: '从小应用开始理解 AI',
+        copy: '适合希望制作网站、机器人、自动化和 AI 产品的人。先调用成熟能力解决问题，再逐步理解数据、接口与工程边界。',
+        steps: [
+          ['第 1 阶段', '编程基础', '掌握变量、条件、函数、数据结构，以及 Git 的基本协作流程。'],
+          ['第 2 阶段', '调用模型', '学习请求、响应、上下文、结构化输出、错误处理与成本意识。'],
+          ['第 3 阶段', '产品闭环', '加入界面、数据、评估与反馈，让演示真正变成可用产品。'],
+          ['作品目标', '可访问的 AI 应用', '发布一个能被其他人真实使用并提供反馈的小应用。']
+        ]
+      },
+      researcher: {
+        title: '用实验理解模型原理',
+        copy: '适合希望深入机器学习、数据科学和模型研究的人。数学与代码同步推进，每个概念都用实验和可视化验证。',
+        steps: [
+          ['第 1 阶段', '数学与 Python', '围绕向量、概率、梯度和数据处理建立最小基础。'],
+          ['第 2 阶段', '经典机器学习', '亲手完成训练、验证、过拟合分析和误差评估。'],
+          ['第 3 阶段', '神经网络与大模型', '理解表示、注意力、训练目标、推理和评估的核心思想。'],
+          ['作品目标', '可复现的实验报告', '用数据、代码与结论完整解释一个模型为何有效或失效。']
+        ]
+      }
+    };
+
+    const routeTitle = document.getElementById('route-title');
+    const routeCopy = document.getElementById('route-copy');
+    const routeTimeline = document.getElementById('route-timeline');
+
+    function renderRoute(key) {
+      const route = routes[key];
+      routeTitle.textContent = route.title;
+      routeCopy.textContent = route.copy;
+      routeTimeline.innerHTML = route.steps.map(([time, title, copy]) => `
+        <li><time>${time}</time><div><strong>${title}</strong><span>${copy}</span></div></li>
+      `).join('');
+    }
+
+    document.querySelectorAll('.segment').forEach((button) => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.segment').forEach((item) => item.setAttribute('aria-selected', 'false'));
+        button.setAttribute('aria-selected', 'true');
+        renderRoute(button.dataset.route);
+      });
+    });
+    renderRoute('creator');
+
+    const promptInputs = document.querySelectorAll('#prompt-form input, #prompt-form textarea, #prompt-form select');
+    const promptText = document.getElementById('prompt-text');
+    const copyPrompt = document.getElementById('copy-prompt');
+
+    function buildPrompt() {
+      const goal = document.getElementById('prompt-goal').value.trim();
+      const context = document.getElementById('prompt-context').value.trim();
+      const output = document.getElementById('prompt-output').value.trim();
+      const rules = document.getElementById('prompt-rules').value.trim();
+      promptText.textContent = `目标：\n${goal || '请填写你的目标'}\n\n背景：\n${context || '请填写必要背景'}\n\n请按以下形式输出：\n${output}\n\n标准与约束：\n${rules || '请填写判断标准和限制'}\n\n在开始回答前，请先指出信息中仍然缺少但会显著影响结果的内容；如果信息已经足够，请直接给出结果。`;
+    }
+
+    promptInputs.forEach((input) => input.addEventListener('input', buildPrompt));
+    buildPrompt();
+
+    copyPrompt.addEventListener('click', async () => {
+      const original = copyPrompt.textContent;
+      try {
+        await navigator.clipboard.writeText(promptText.textContent);
+      } catch (error) {
+        const range = document.createRange();
+        range.selectNodeContents(promptText);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand('copy');
+        selection.removeAllRanges();
+      }
+      copyPrompt.textContent = '已复制';
+      window.setTimeout(() => { copyPrompt.textContent = original; }, 1400);
+    });
+
+    const taskBoxes = [...document.querySelectorAll('[data-task]')];
+    const progressLabel = document.getElementById('progress-label');
+    const progressFill = document.getElementById('progress-fill');
+    const storageKey = 'ai-learning-plan-progress-v1';
+
+    function loadTasks() {
+      let saved = [];
+      try {
+        saved = JSON.parse(localStorage.getItem(storageKey)) || [];
+      } catch (error) {
+        saved = [];
+      }
+      taskBoxes.forEach((box) => { box.checked = saved.includes(box.dataset.task); });
+    }
+
+    function updateTasks() {
+      const completed = taskBoxes.filter((box) => box.checked).map((box) => box.dataset.task);
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(completed));
+      } catch (error) {
+        // The checklist remains usable even when browser storage is unavailable.
+      }
+      progressLabel.textContent = `${completed.length} / ${taskBoxes.length}`;
+      progressFill.style.width = `${(completed.length / taskBoxes.length) * 100}%`;
+    }
+
+    taskBoxes.forEach((box) => box.addEventListener('change', updateTasks));
+    loadTasks();
+    updateTasks();
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal').forEach((item) => item.classList.add('visible'));
+    } else {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach((item) => observer.observe(item));
+    }
+  </script>
+</body>
+</html>
